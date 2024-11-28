@@ -9,15 +9,21 @@
   "description": "",
   "dependencies": {
     "body-parser": "^1.20.3",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.21.1",
     "express-validator": "^7.2.0",
     "http-status-codes": "^2.3.0",
-    "mongoose": "^8.7.1"
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.7.1",
+    "uuid": "^11.0.3"
   },
   "devDependencies": {
+    "@types/cookie-parser": "^1.4.7",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.13",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/mongoose": "^5.11.96",
     "@types/node": "^22.7.5",
     "nodemon": "^3.1.7",
