@@ -1,14 +1,27 @@
+// src/pages/Users.tsx
 import '@mantine/dates/styles.css';
 import 'mantine-react-table/styles.css';
 import { MantineReactTable, MRT_ColumnDef, MRT_ColumnFiltersState, MRT_SortingState, useMantineReactTable } from "mantine-react-table";
-import { useEffect, useMemo, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
 import { baseUrl } from '../config';
 import { showNotification } from '@mantine/notifications';
+import { AuthContext } from '../context/AuthContext';
 
 type User = { firstName: string; lastName: string; emailAddress: string; };
-type UsersProps = { accessToken: string | null; refreshToken: () => Promise<void> | null; setAccessToken: (token: string) => void; };
 
-function Users({ accessToken, refreshToken, setAccessToken }: UsersProps) {
+function Users() {
+
+  // Accès au contexte, en vérifiant qu'il est bien défini
+  const authContext = useContext(AuthContext);
+
+  console.log("AuthContext in Users:", authContext);  // Vérifie si le contexte est disponible
+
+  if (!authContext) {
+    throw new Error('AuthContext is not available');
+  }
+
+  const { accessToken, refreshAccessToken } = authContext;
+
   const [data, setData] = useState<User[]>([]);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -22,40 +35,6 @@ function Users({ accessToken, refreshToken, setAccessToken }: UsersProps) {
 
   const handleError = (message: string) => {
     showNotification({ title: 'Erreur', message, color: 'red' });
-  };
-
-  // Fonction pour rafraîchir le token d'accès
-  const refreshAccessToken = async () => {
-    if (!refreshToken) {
-      handleError('Refresh token absent');
-      return;
-    }
-
-    try {
-      setIsLoading(true);
-      const response = await fetch(`${baseUrl}/refresh-token`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ refreshToken }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Échec du rafraîchissement du token');
-      }
-
-      const data = await response.json();
-      const newAccessToken = data.accessToken;
-      localStorage.setItem('accessToken', newAccessToken); // Stocker le nouveau token
-      setAccessToken(newAccessToken); // Mettre à jour l'état avec le nouveau token
-      console.log('Access token refreshed successfully');
-    } catch (error) {
-      handleError('Impossible de rafraîchir le token d\'accès');
-      console.error('Error refreshing access token:', error);
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   // Fonction pour charger les données des utilisateurs
@@ -86,7 +65,7 @@ function Users({ accessToken, refreshToken, setAccessToken }: UsersProps) {
         if (response.status === 401) {
           console.log('Token expired, trying to refresh...');
           await refreshAccessToken(); // Rafraîchir le token si expiré
-          return; // Après le rafraîchissement, il faudra relancer l'appel
+          return fetchData(); // Relancer la requête avec le nouveau token
         }
         throw new Error('Erreur de chargement des utilisateurs');
       }
