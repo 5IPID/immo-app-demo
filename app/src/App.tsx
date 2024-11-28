@@ -70,7 +70,7 @@ function App() {
       <Routes>
         <Route path="/" element={<OneColumnLayout />}>
           <Route path="/product" element={<Product />} />
-          <Route path="/users" element={<Users accessToken={accessToken} refreshAccessToken={refreshAccessToken} />} />
+          <Route path="/users" element={<Users accessToken={accessToken} refreshToken={refreshAccessToken} setAccessToken={setAccessToken} />} />
         </Route>
       </Routes>
     </BrowserRouter>

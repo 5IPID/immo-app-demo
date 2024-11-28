@@ -6,7 +6,7 @@ import { baseUrl } from '../config';
 import { showNotification } from '@mantine/notifications';
 
 type User = { firstName: string; lastName: string; emailAddress: string; };
-type UsersProps = { accessToken: string | null; refreshToken: string | null; setAccessToken: (token: string) => void; };
+type UsersProps = { accessToken: string | null; refreshToken: () => Promise<void> | null; setAccessToken: (token: string) => void; };
 
 function Users({ accessToken, refreshToken, setAccessToken }: UsersProps) {
   const [data, setData] = useState<User[]>([]);
