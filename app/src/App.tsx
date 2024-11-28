@@ -24,7 +24,7 @@ function App() {
     }
 
     try {
-      const response = await fetch(`${baseUrl}/auth/refresh-token`, {
+      const response = await fetch(`${baseUrl}/refresh-token`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
