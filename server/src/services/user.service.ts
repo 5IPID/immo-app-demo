@@ -11,14 +11,14 @@ type UserUpdate = Partial<{
 }>;
 
 const DEFAULT_SIZE = 10;
-const DEFAULT_PAGE = 1;
+const DEFAULT_PAGE = 0;
 
 async function getAll(pagination: Pagination, sort: Sort | null) {
     try {
         const start = pagination.start || DEFAULT_PAGE;
         const size = pagination.size || DEFAULT_SIZE;
-        if(sort) {
-            return await User.find().sort({[`${sort?.id}`]: sort?.desc ? "desc" : "asc"}).skip(start).limit(size);    
+        if (sort) {
+            return await User.find().sort({ [`${sort?.id}`]: sort?.desc ? "desc" : "asc" }).skip(start).limit(size);
         }
         return await User.find().skip(start).limit(size);
     } catch (err: any) {
@@ -40,7 +40,7 @@ async function create(user: TUser): Promise<TUser | ValidationError | Array<Vali
 
         return await userToSave.save();
     } catch (err: any) {
-        let errors:Array<ValidationError> = [];
+        let errors: Array<ValidationError> = [];
         if (err.code = errorsCode.DUPLICATE_KEY_EXCEPTION) {
             const v = transformKeyValueToErrorFields(err.keyValue);
             v.errorFields.forEach(errorField => {

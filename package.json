@@ -1,2 +1,13 @@
 {
-}
+
+    "name": "immo_project",
+    "version": "1.0.0",
+    "description": "Immo Project",
+    "repository": {
+      "type": "git",
+      "url": ""
+    },
+    "author": "Cédric Singelé",
+    "license": "MIT"
+  }
+

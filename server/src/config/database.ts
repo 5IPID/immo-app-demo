@@ -1,11 +1,9 @@
 import { connect } from "mongoose";
-
-const mongoURL = "mongodb://127.0.0.1:27017/immoApp?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.0";
+import CONFIG from "./config";
 
 export const connectDB = async () => {
     try {
-        await  connect(mongoURL);
-
+        await  connect(CONFIG.MONGODB_URI);
         console.log("MongoDB connected");
     } catch (err: any) {
         console.error(err.message);

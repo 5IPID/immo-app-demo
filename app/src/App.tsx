@@ -1,3 +1,4 @@
+
 import "@mantine/core/styles.css";
 import '@mantine/notifications/styles.css';
 
@@ -6,6 +7,15 @@ import Product from "./pages/Product";
 import { OneColumnLayout } from "./layout/OneColumnLayout";
 import Users from "./pages/Users";
 
+
+/*
+let datas = {
+  title: 'Mon Titre',
+  buttonProducts: 'Products',
+  buttonSignIn: 'Sign in',
+  buttonRegister: 'Register'
+}
+*/
 function App() {
   return (
     <BrowserRouter>
@@ -17,6 +27,7 @@ function App() {
       </Routes>
     </BrowserRouter>
   );
+
 }
 
 export default App;
